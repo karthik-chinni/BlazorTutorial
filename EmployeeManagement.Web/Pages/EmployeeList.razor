@@ -1,7 +1,34 @@
-﻿@page "/"
+﻿@*The single forward slash specifies to render this component when we navigate to the root application URL.*@
+@page "/"
+@*specifies the base class for this component.*@
+@inherits EmployeeListBase
 
 <h3>Employee List</h3>
 
-@code {
+@if (Employees == null)
+{
+    <div class="spinner"></div>
+}
 
+else
+{
+    <div class="card-deck">
+
+        @*Each employee is displayed using a Bootstrap card.*@
+        @foreach (var emp in Employees)
+        {
+            <div class="card m-3" style="min-width: 18rem; max-width:30.5%;">
+                <div class="card-header">
+                    <h3>@emp.FirstName @emp.LastName</h3>
+                </div>
+                <img class="card-img-top" style="height:200px; width:auto" src="@emp.PhotoPath" />
+                <div class="card-footer text-center">
+                    <a href="#" class="btn btn-primary m-1">View</a>
+                    <a href="#" class="btn btn-primary m-1">Edit</a>
+                    <a href="#" class="btn btn-danger m-1">Delete</a>
+                </div>
+            </div>
+        }
+
+    </div>
 }
