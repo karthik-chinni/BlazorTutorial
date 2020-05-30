@@ -16,6 +16,11 @@ namespace EmployeeManagement.Api.Models
             this.appDbContext = appDbContext;
         }
 
+        public async Task<Employee> GetEmpEmail(string email)
+        {
+            return await appDbContext.Employees.FirstOrDefaultAsync(e => e.Email == email);
+        }
+
         public async Task<IEnumerable<Employee>> GetEmployees()
         {
             return await appDbContext.Employees.ToListAsync();
@@ -56,7 +61,7 @@ namespace EmployeeManagement.Api.Models
             return null;
         }
 
-        public async void DeleteEmployee(int Id)
+        public async Task<Employee> DeleteEmployee(int Id)
         {
             var result = await appDbContext.Employees
                 .FirstOrDefaultAsync(e => e.EmployeeId == Id);
@@ -65,7 +70,10 @@ namespace EmployeeManagement.Api.Models
             {
                 appDbContext.Employees.Remove(result);
                 await appDbContext.SaveChangesAsync();
+                return result;
             }
+
+            return null;
         }
     }
 }
