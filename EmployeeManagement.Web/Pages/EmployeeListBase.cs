@@ -13,13 +13,28 @@ namespace EmployeeManagement.Web.Pages
         [Inject]
         public IEmployeeService EmployeeService { get; set; }
 
+        public bool showHide { get; set; } = true;
+
+        public int SelectedEmployeeCount { get; set; } = 0;
+
         //To store List of Employees we created the property
         public IEnumerable<Employee> Employees { get; set; }
+
+        protected void EmployeeSelectionChanged(bool isSelected)
+        {
+            if (isSelected)
+                SelectedEmployeeCount++;
+            else
+                SelectedEmployeeCount--;
+        }
 
         protected override async Task OnInitializedAsync()
         {
             Employees = (await EmployeeService.GetEmployees()).ToList();
         }
+
+
+
 
         ////Hard-coding the list of employees for the demo
         //private void LoadEmployees()
